@@ -1,0 +1,16 @@
+{
+  "name": "argo-url-router",
+  "version": "0.0.0",
+  "description": "A friendly URL router for Argo.",
+  "main": "router.js",
+  "directories": {
+    "example": "example"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kevin Swiber <kswiber@gmail.com>",
+  "license": "MIT"
+}
