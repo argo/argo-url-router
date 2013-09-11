@@ -13,19 +13,16 @@ var UrlRouter = function(argo) {
 
   if(argo) {
     argo
-    .use(function(handle){
-      handle("request", {affinity:"hoist"}, function(env, next){
-        env.router = {};
-        var reqUrl = env.request.url;
-        var parsedReqUrl = url.parse(reqUrl, true);
-        if(parsedReqUrl.query) {
-          env.router.query = parsedReqUrl.query;
-        } else if(parsedReqUrl.hash) {
-          env.router.hash = parsedReqUrl.hash;
-        }
-        next(env);
+      .use(function(handle) {
+        handle('request', { affinity: 'hoist' }, function(env, next){
+          env.route = env.route || {};
+          var parsed = url.parse(env.request.url, true);
+
+          env.route.query = parsed.query;
+
+          next(env);
+        });
       });
-    });
   }
 };
 
@@ -45,7 +42,6 @@ UrlRouter.prototype.add = function(path, methods, handleFn) {
   methods.forEach(function(method) {
     that._router[path][method.toLowerCase()] = handleFn;
   });
-  //console.log(this._router);
 };
 
 UrlRouter.prototype.find = function(path, method) {
@@ -55,8 +51,7 @@ UrlRouter.prototype.find = function(path, method) {
   var params = {};
   method = method.toLowerCase();
 
-  var parsedPath = url.parse(path, true);
-  path = parsedPath.pathname;
+  path = url.parse(path).pathname;
 
   var self = this;
   this._routerKeys.forEach(function(key) {
