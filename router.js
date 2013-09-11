@@ -138,12 +138,19 @@ UrlRouter.prototype.parse = function(route, path) {
   var part;
 
   while (part = pattern.exec(route)) {
-    parts.push(route.slice(pos, part.index));
+    parts.push(route.slice(pos, part.index-1));
 
     var name = part[1];
-    captures.push(name);
+    var expr = '/([^\/]+)';
 
-    parts.push('([^\/]+)');
+    if (name.slice(-1) === '?') {
+      name = name.slice(0, -1);
+      expr = '(?:/([^\/]*))?';
+    }
+
+    captures.push(name);
+    parts.push(expr);
+
     pos = part.index + part[0].length;
   };
 
@@ -151,16 +158,10 @@ UrlRouter.prototype.parse = function(route, path) {
     parts.push(route.substr(pos));
   }
 
-  //parts.push('$');
-
-  //console.log(captures);
-  //console.log(parts.join(''));
-
   return { captures: captures, key: parts.join('') };
 };
 
 UrlRouter.create = UrlRouter.prototype.create = function(argo) {
-  //console.log('new router');
   return new UrlRouter(argo);
 };
 

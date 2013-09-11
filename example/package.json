@@ -11,6 +11,6 @@
   "author": "Kevin Swiber <kswiber@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "argo": "~0.4.0-alpha"
+    "argo": "~0.4.0-alpha.2"
   }
 }

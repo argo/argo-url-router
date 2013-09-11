@@ -5,6 +5,13 @@ argo()
   .use(router)
   .map('/hello', function(server) {
     server
+      .get('/hello/{name?}', function(handle) {
+        handle('request', function(env, next) {
+          var name = env.route.params.name || 'world';
+          env.response.body = 'Hello ' + name + '!';
+          next(env);
+        });
+      })
       .get('/{name}/from/{location}', function(handle) {
         handle('request', function(env, next) {
           var params = env.request.params;
