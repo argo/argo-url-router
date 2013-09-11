@@ -1,3 +1,5 @@
+var url = require('url');
+
 var UrlRouterResult = function() {
   this.warning = null;
   this.params = null;
