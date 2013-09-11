@@ -16,7 +16,6 @@ var UrlRouter = function(argo) {
         env.router = {};
         var reqUrl = env.request.url;
         var parsedReqUrl = url.parse(reqUrl, true);
-        env.request.url = parsedReqUrl.pathname;
         if(parsedReqUrl.query) {
           env.router.query = parsedReqUrl.query;
         } else if(parsedReqUrl.hash) {
@@ -53,6 +52,9 @@ UrlRouter.prototype.find = function(path, method) {
   var found = false;
   var params = {};
   method = method.toLowerCase();
+
+  var parsedPath = url.parse(path, true);
+  path = parsedPath.pathname;
 
   var self = this;
   this._routerKeys.forEach(function(key) {
