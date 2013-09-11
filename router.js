@@ -8,6 +8,24 @@ var UrlRouter = function(argo) {
   this._argo = argo;
   this._router = [];
   this._routerKeys = [];
+
+  if(argo) {
+    argo
+    .use(function(handle){
+      handle("request", {affinity:"hoist"}, function(env, next){
+        env.router = {};
+        var reqUrl = env.request.url;
+        var parsedReqUrl = url.parse(reqUrl, true);
+        env.request.url = parsedReqUrl.pathname;
+        if(parsedReqUrl.query) {
+          env.router.query = parsedReqUrl.query;
+        } else if(parsedReqUrl.hash) {
+          env.router.hash = parsedReqUrl.hash;
+        }
+        next(env);
+      });
+    });
+  }
 };
 
 UrlRouter.prototype.install = function() {
