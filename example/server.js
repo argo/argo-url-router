@@ -14,7 +14,7 @@ argo()
       })
       .get('/{name}/from/{location}', function(handle) {
         handle('request', function(env, next) {
-          var params = env.request.params;
+          var params = env.route.params;
           var name = params.name;
           var location = params.location;
           env.response.body = 'Hello, ' + name + ' from ' + location;
