@@ -5,7 +5,20 @@ argo()
   .use(router)
   .map('/hello', function(server) {
     server
-      .get('/hello/{name?}', function(handle) {
+      .get('/me/{splat?: (.*)}', function(handle) {
+        handle('request', function(env, next) {
+          var splat = env.route.params.splat || '[none]';
+          env.response.body = splat;
+          next(env);
+        });
+      })
+      .get('/you/{id: ([0-9]*)}', function(handle) {
+        handle('request', function(env, next) {
+          env.response.body = env.route.params.id;
+          next(env);
+        });
+      })
+      .get('/aloha/{name?}', function(handle) {
         handle('request', function(env, next) {
           var name = env.route.params.name || 'world';
           env.response.body = 'Hello ' + name + '!';
