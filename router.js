@@ -45,13 +45,12 @@ UrlRouter.prototype.add = function(path, options, handleFn) {
 };
 
 UrlRouter.prototype.find = function(path, method) {
-
   var routerKey;
   var found = false;
   var params = {};
   method = method.toLowerCase();
 
-  path = url.parse(path).pathname;
+  path = url.parse(path).pathname || '/';
 
   var self = this;
   this._routerKeys.forEach(function(obj) {
