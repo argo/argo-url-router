@@ -177,6 +177,12 @@ UrlRouter.prototype.parse = function(route, actsAsPrefix) {
     if (path.slice(-1) === '$') {
       path = path.slice(0, -1);
     }
+
+    if (path.slice(-1) === '/') {
+      path = path.slice(0, -1);
+    }
+
+    path = path + '\(/.*\)?$';
   } else {
     if (path.slice(-1) !== '$') {
       path = path + '$';
