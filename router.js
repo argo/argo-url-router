@@ -4,6 +4,7 @@ var UrlRouterResult = function() {
   this.warning = null;
   this.params = null;
   this.handlerFn = null;
+  this.methods = null;
 };
 
 var UrlRouter = function(argo) {
@@ -87,6 +88,7 @@ UrlRouter.prototype.find = function(path, method) {
        !this._router[routerKey]['*'])) {
     var result = new UrlRouterResult();
     result.warning = 'MethodNotSupported';
+    result.methods = Object.keys(this._router[routerKey]);
     return result;
   }
 
